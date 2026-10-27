@@ -14,6 +14,7 @@ import Projects from "./Projects";
 import Education from "./Education";
 import Contact from "./Contact";
 import CustomPage from "./CustomPage";
+import * as H from "../templates/Heroes";
 
 function Hero() {
   const { profile, isVisible, link } = useSite();
@@ -149,10 +150,25 @@ function AllSections() {
   );
 }
 
+const HEROES = {
+  classic: Hero,
+  brooklyn: H.BrooklynHero,
+  brandon: H.BrandonHero,
+  howard: H.HowardHero,
+  tejas: H.TejasHero,
+  alejandro: H.AlejandroHero,
+  roton: H.RotonHero,
+  john: H.JohnHero,
+  agency: H.AgencyHero,
+  crimson: H.CrimsonHero,
+};
+
 export default function Home() {
+  const { template } = useSite();
+  const ActiveHero = HEROES[template] || Hero;
   return (
     <>
-      <Hero />
+      <ActiveHero />
       <AllSections />
     </>
   );

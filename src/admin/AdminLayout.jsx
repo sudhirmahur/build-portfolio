@@ -10,6 +10,8 @@ const links = [
   { to: '/admin/profile', label: 'Profile & content', icon: 'user' },
   { to: '/admin/pages', label: 'Pages & menu', icon: 'pages' },
   { to: '/admin/design', label: 'Design & link', icon: 'eye' },
+  { to: '/admin/templates', label: 'Templates', icon: 'pages' },
+  { to: '/admin/resume', label: 'Resume builder', icon: 'file' },
   { to: '/admin/projects', label: 'Projects', icon: 'folder' },
   { to: '/admin/experience', label: 'Experience', icon: 'briefcase' },
   { to: '/admin/skills', label: 'Skills', icon: 'code' },

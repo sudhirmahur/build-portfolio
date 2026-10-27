@@ -225,3 +225,51 @@ textarea:focus-visible,
     height: 2rem;
   }
 }
+
+/* ---------- Resume builder: print to A4 PDF ---------- */
+#resume-print-portal { display: none; }
+@media print {
+  @page { size: A4; margin: 0; }
+  body.resume-printing { background: #fff !important; overflow: visible !important; }
+  body.resume-printing #root { display: none !important; }
+  body.resume-printing #resume-print-portal { display: block !important; }
+  body.resume-printing #resume-print-portal .resume-page {
+    width: 794px !important;
+    min-height: 1123px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    break-inside: auto;
+  }
+  body.resume-printing * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ---------- Portfolio templates ---------- */
+@keyframes tpl-blink { 50% { opacity: 0; } }
+.tpl-cursor { animation: tpl-blink 1s steps(1) infinite; }
+
+[data-tpl] [data-st="title"] { font-weight: 700; }
+
+/* Amber profile: pill section headings */
+[data-tpl="brandon"] [data-st="title"] {
+  display: inline-block; background: var(--accent); color: #2b1d00;
+  padding: .45rem 2rem .45rem 1rem; border-radius: 0 999px 999px 0;
+  font-size: 1.25rem; margin-left: -1rem;
+}
+[data-tpl="brandon"] [data-st="kicker"] { display: none; }
+
+/* Blue sidebar: full-width grey section bands */
+[data-tpl="howard"] [data-st="wrap"] { max-width: none; width: 100%; align-items: stretch; text-align: center; }
+[data-tpl="howard"] [data-st="title"] { background: var(--bg-elevated-2); padding: .65rem 1rem; font-size: 1.4rem; }
+[data-tpl="howard"] [data-st="kicker"] { display: none; }
+
+/* Profile card: every section is a rounded card */
+[data-tpl="john"] [data-shell] { padding-top: .75rem; padding-bottom: .75rem; }
+[data-tpl="john"] [data-shell] > div {
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 1.5rem; padding: 2rem 1.5rem;
+}
+@media (min-width: 640px) { [data-tpl="john"] [data-shell] > div { padding: 2.25rem; } }
+
+[data-tpl="roton"] [data-st="title"] { text-transform: uppercase; letter-spacing: .04em; }
+[data-tpl="crimson"] [data-st="title"] { text-transform: uppercase; font-weight: 800; }
+[data-tpl="tejas"] [data-st="title"] { font-weight: 800; }

@@ -28,3 +28,10 @@ npm run build
 - Company page (`/`): `src/pages/Landing.jsx` (upar `COMPANY`, `STATS`, `SERVICES`, `TECH` constants)
 - Page title / SEO: `index.html`
 - Portfolio ka content: admin panel se (Profile & content, Pages & menu, Design & link)
+
+## New in this version
+
+- **Admin → Resume builder**: **20 A4 resume templates, each with a different page layout (live preview, "Import from portfolio", Save, **Download PDF** — in the print window choose *Save as PDF*, paper A4, margins None, Background graphics ON).
+- **Admin → Templates**: **10** portfolio templates — Classic (default), Brooklyn, Amber Profile, Blue Sidebar, Black & Gold, Midnight Green, Neon Developer, Profile Card, Cyan Studio, Crimson Dark. Each has its own colours/fonts. Add `?tpl=<id>` to a portfolio URL to preview. Colours picked on the *Design* page override the template colours.
+- No new npm dependencies, so `package-lock.json` is unchanged.
+- Works with the old backend too (template falls back to Classic); saving a resume/template needs the new backend.

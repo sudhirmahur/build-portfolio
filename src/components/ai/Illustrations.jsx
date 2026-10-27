@@ -37,7 +37,8 @@ export function NeuralNetwork({ className = "" }) {
           cy={n.y}
           r="9"
           fill={i % 3 === 0 ? "var(--accent)" : "var(--accent-2)"}
-          animate={{ opacity: [0.45, 1, 0.45], r: [8, 10, 8] }}
+          style={{ transformBox: "fill-box", transformOrigin: "center" }}
+          animate={{ opacity: [0.45, 1, 0.45], scale: [0.85, 1.15, 0.85] }}
           transition={{ duration: 2.4, repeat: Infinity, delay: (i % 7) * 0.25, ease: "easeInOut" }}
         />
       ))}

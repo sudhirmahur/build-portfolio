@@ -14,6 +14,9 @@ import EducationAdmin from './pages/EducationAdmin';
 import MessagesAdmin from './pages/MessagesAdmin';
 import AccountAdmin from './pages/AccountAdmin';
 import DesignAdmin from './pages/DesignAdmin';
+import ResumeGallery from './pages/ResumeGallery';
+import ResumeEditor from './pages/ResumeEditor';
+import TemplatesAdmin from './pages/TemplatesAdmin';
 import UsersAdmin from './pages/UsersAdmin';
 import Register from './pages/Register';
 
@@ -58,6 +61,9 @@ export default function AdminRoutes() {
         <Route path="messages" element={<MessagesAdmin />} />
         <Route path="account" element={<AccountAdmin />} />
         <Route path="design" element={<DesignAdmin />} />
+        <Route path="resume" element={<ResumeGallery />} />
+        <Route path="resume/:templateId" element={<ResumeEditor />} />
+        <Route path="templates" element={<TemplatesAdmin />} />
         <Route path="users" element={<SuperAdminOnly><UsersAdmin /></SuperAdminOnly>} />
       </Route>
       <Route path="*" element={<Navigate to="/admin" replace />} />

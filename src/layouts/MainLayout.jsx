@@ -8,6 +8,11 @@ import BackToTop from "../components/BackToTop";
 import Loader from "../components/Loader";
 import { AlertTriangleIcon } from "../components/icons/StatusIcons";
 import NotFound from "../pages/NotFound";
+import TemplateHeader from "../templates/TemplateHeader";
+import { HowardRail, JohnRail } from "../templates/Rails";
+import { getPortfolioTemplate } from "../templates/portfolioTemplates";
+import { themeVars } from "../utils/theme";
+import { fontStack, loadFont } from "../utils/fonts";
 import { SiteProvider, useSite } from "../context/SiteContext";
 
 function ScrollToTop() {
@@ -19,7 +24,21 @@ function ScrollToTop() {
 }
 
 function SiteShell() {
-  const { loading, error, profile, reload } = useSite();
+  const { loading, error, profile, reload, template, theme } = useSite();
+  const tpl = getPortfolioTemplate(template);
+  // the user's own colours (Design page) win over the template palette
+  const palette = theme?.enabled ? null : tpl.palette;
+
+  useEffect(() => {
+    if (!palette) return undefined;
+    loadFont(palette.headingFont);
+    loadFont(palette.bodyFont);
+    const previous = document.body.style.backgroundColor;
+    document.body.style.backgroundColor = palette.bg;
+    return () => {
+      document.body.style.backgroundColor = previous;
+    };
+  }, [palette]);
   const { pathname } = useLocation();
 
   if (error?.status === 404) return <NotFound home="/" title="Portfolio not found" text="This portfolio does not exist, or its owner has not published it." />;
@@ -45,23 +64,67 @@ function SiteShell() {
     );
   }
 
+  const wrapStyle = palette
+    ? {
+        ...themeVars(palette),
+        '--accent-2': palette.accent,
+        '--accent-2-strong': palette.accent,
+        backgroundColor: palette.bg,
+        color: palette.text,
+        fontFamily: fontStack(palette.bodyFont),
+      }
+    : undefined;
+
+  const content = (
+    <>
+      <motion.main
+        key={pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      >
+        <Outlet />
+      </motion.main>
+      <Footer />
+    </>
+  );
+
+  let body;
+  if (tpl.rail === "howard") {
+    body = (
+      <>
+        <HowardRail />
+        <div className="lg:hidden"><TemplateHeader variant="plain" /></div>
+        <div className="lg:pl-72">{content}</div>
+      </>
+    );
+  } else if (tpl.rail === "john") {
+    body = (
+      <>
+        <div className="lg:hidden"><TemplateHeader variant="plain" /></div>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-8 lg:py-8">
+          <JohnRail />
+          <div className="min-w-0">{content}</div>
+        </div>
+      </>
+    );
+  } else {
+    body = (
+      <>
+        {tpl.header === "classic" ? <Header /> : <TemplateHeader variant={tpl.header} />}
+        {content}
+      </>
+    );
+  }
+
   return (
     <>
       <Loader loading={loading} />
       {!loading && (
-        <div className="min-h-screen">
+        <div className="min-h-screen" data-tpl={tpl.id} style={wrapStyle}>
           <ScrollToTop />
           <ScrollProgress />
-          <Header />
-          <motion.main
-            key={pathname}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-          >
-            <Outlet />
-          </motion.main>
-          <Footer />
+          {body}
           <BackToTop />
         </div>
       )}

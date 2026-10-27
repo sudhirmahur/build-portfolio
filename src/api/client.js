@@ -1,8 +1,10 @@
 // Development: falls back to the local backend. Production: set VITE_API_URL to your deployed backend
 // (e.g. https://your-backend.onrender.com/api). Without it the site calls /api on its own domain.
-const API_URL = (
-  import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000/api' : '/api')
-).replace(/\/+$/, '');
+const RAW_API_URL =
+  import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000/api' : '/api');
+// accepts both "https://backend.com" and "https://backend.com/api"
+const trimmed = RAW_API_URL.replace(/\/+$/, '');
+const API_URL = /\/api$/.test(trimmed) ? trimmed : `${trimmed}/api`;
 const TOKEN_KEY = 'sm_admin_token';
 
 export const getToken = () => {
