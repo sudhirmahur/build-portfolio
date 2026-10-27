@@ -208,14 +208,14 @@ export function AlejandroHero() {
           <div className="mx-auto mt-6 h-[22rem] w-[18rem] -rotate-[8deg] overflow-hidden border border-white/10 shadow-2xl sm:h-[28rem] sm:w-[24rem] lg:mx-0">
             <Pic photo={photo} name={profile.name} className="h-full w-full" imgClass="grayscale" />
           </div>
-          <div className="relative max-w-md self-center lg:ml-auto">
-            <span className="absolute -top-16 left-1/3 hidden h-6 w-6 rounded-full bg-[var(--accent)]/80 lg:block" />
-            <p className="text-sm leading-relaxed text-[var(--text)]/90">
+          <div className="relative self-center lg:ml-auto">
+            {/* <span className="absolute -top-16 left-1/3 hidden h-16 w-16 rounded-full bg-[var(--accent)]/80 lg:block" /> */}
+            <p className="text-4xl leading-relaxed text-[var(--text)]/90">
               Hello, I’m <span className="font-semibold text-[var(--accent)]">{profile.name}</span>
               {profile.role ? `, ${profile.role}` : ''}
               {profile.location ? ` based in ${profile.location}.` : '.'}
             </p>
-            {profile.heroDescription && <p className="mt-3 text-sm leading-relaxed text-[var(--text-muted)]">{profile.heroDescription}</p>}
+            {profile.heroDescription && <p className="mt-3 text-lg leading-relaxed text-[var(--text-muted)]">{profile.heroDescription}</p>}
           </div>
         </div>
         <div className="relative pb-8 pt-6">
@@ -265,7 +265,15 @@ export function RotonHero() {
           )}
         </div>
         <div className="flex justify-center lg:justify-end">
-          <Pic photo={photo} name={profile.name} className="h-[26rem] w-full max-w-sm rounded-2xl shadow-[0_0_60px_-10px_var(--accent)]" imgClass="object-top" />
+          {photo ? (
+            <img
+              src={photo}
+              alt={profile.name}
+              className="h-auto max-h-[34rem] w-auto max-w-full rounded-2xl object-contain shadow-[0_0_60px_-10px_var(--accent)]"
+            />
+          ) : (
+            <Pic photo={null} name={profile.name} className="h-[26rem] w-full max-w-sm rounded-2xl" />
+          )}
         </div>
       </div>
     </section>
