@@ -36,20 +36,12 @@ export function AuthProvider({ children }) {
     return () => window.removeEventListener('sm:unauthorized', logout);
   }, [logout]);
 
-
-const login = useCallback(async (email, password) => {
-  const res = await api.post('/auth/login', { email, password });
-
-  if (!res || !res.token) {
-    throw new Error('Login failed: token not received from backend.');
-  }
-
-  setToken(res.token);
-  setAdmin(res.admin);
-
-  return res.admin;
-}, []);
-
+  const login = useCallback(async (email, password) => {
+    const res = await api.post('/auth/login', { email, password });
+    setToken(res.token);
+    setAdmin(res.admin);
+    return res.admin;
+  }, []);
 
   /** payload: { name, email, password, avatar?, slug?, title?, location?, phone?, education?, job? } */
   const register = useCallback(async (payload) => {
